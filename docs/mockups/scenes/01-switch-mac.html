@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<!-- 배경 C_folded_cover 의 맥 화면 영역(1.60) -->
+<meta name="shot" content="w=960,h=600,scale=1.875">
+<link rel="stylesheet" href="https://mockup-kit.invalid/kit.css">
+<script src="https://mockup-kit.invalid/kit.js"></script>
+<link rel="stylesheet" href="../_app.css">
+<link rel="stylesheet" href="_scene.css">
+<style>
+  .set { left:60px; top:76px; width:840px; height:450px; }
+  .set .mac-split { grid-template-columns: 200px 1fr; }
+  .set .mac-sidebar { font-size:17px; padding:14px 10px; gap:4px; }
+  .set .mac-sidebar .sb-item { height:40px; gap:10px; }
+  .pane { padding:22px 30px; display:flex; flex-direction:column; gap:16px; }
+  .pane h2 { margin:0; font-size:30px; font-weight:700; }
+  .segm { align-self:center; display:inline-flex; padding:3px; gap:2px; border-radius:10px; background: rgba(0,0,0,.06); font-size:17px; }
+  .segm span { padding:6px 28px; border-radius:8px; color:var(--mac-dim); }
+  .segm span.on { background:#fff; color:var(--mac-text); font-weight:600; box-shadow:0 1px 2px rgba(0,0,0,.12); }
+  .grp { border:1px solid var(--mac-border); border-radius:12px; background: rgba(0,0,0,.02); overflow:hidden; }
+  .row { display:grid; grid-template-columns: 1fr 150px; align-items:center; height:68px; padding:0 20px; font-size:23px; }
+  .row + .row { border-top:1px solid var(--mac-border); }
+  .row .ty { color:var(--mac-dim); font-size:18px; text-align:right; }
+  .row.sel { background:#7C3AED; color:#fff; font-weight:700; }
+  .row.sel .ty { color: rgba(255,255,255,.85); }
+  .lv { display:grid; grid-template-columns: 120px 1fr; align-items:center; gap:16px; font-size:20px; padding:22px 20px; }
+</style>
+</head><body>
+<div class="desk app-foldmic light">
+  <div class="mac-menubar"><span class="app-name">시스템 설정</span><span>편집</span><span>보기</span><span>윈도우</span>
+    <span class="extras"><span class="extra mic"><i data-icon="mic"></i></span><span class="extra"><i data-icon="wifi"></i></span><span class="extra"><i data-icon="battery"></i></span><span class="clock">9월 28일 (일) 오후 2:30</span></span></div>
+  <div class="mac-window set">
+    <div class="mac-titlebar"><span class="traffic"><i></i><i></i><i></i></span></div>
+    <div class="mac-split">
+      <div class="mac-sidebar">
+        <div class="sb-item"><i data-icon="wifi"></i>Wi-Fi</div>
+        <div class="sb-item"><i data-icon="bluetooth"></i>Bluetooth</div>
+        <div class="sb-item"><i data-icon="bell"></i>알림</div>
+        <div class="sb-item on"><i data-icon="volume"></i>사운드</div>
+        <div class="sb-item"><i data-icon="keyboard"></i>키보드</div>
+        <div class="sb-item"><i data-icon="monitor"></i>디스플레이</div>
+      </div>
+      <div class="pane">
+        <h2>사운드</h2>
+        <div class="segm"><span>출력</span><span class="on">입력</span></div>
+        <div class="grp">
+          <div class="row sel"><span>BlackHole 2ch</span><span class="ty">가상</span></div>
+          <div class="row"><span>내장 마이크</span><span class="ty">내장</span></div>
+        </div>
+        <div class="grp">
+          <div class="lv"><span>입력 레벨</span><div class="meter"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

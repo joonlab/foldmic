@@ -9,3 +9,5 @@ node android-mac-lab/mockup-kit/shot.mjs --batch docs/mockups   # → docs/image
 ```
 
 킷 사용법: https://github.com/joonlab/android-mac-lab/tree/main/mockup-kit
+
+책상 장면(`docs/images/scenes/*.jpg`)의 화면은 `scenes/` 의 HTML 입니다. 각 파일의 `<meta name="shot">` 크기로 렌더한 뒤 AI로 만든 책상 배경 사진의 화면 자리에 원근 합성했습니다.
