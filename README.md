@@ -83,7 +83,7 @@ brew install scrcpy switchaudio-osx ffmpeg && brew install --cask android-platfo
 brew install --cask blackhole-2ch && sudo killall coreaudiod     # 재부팅 없이 장치 인식
 
 mkdir -p ~/.local/bin ~/.config/foldmic
-ln -sf ~/foldmic/bin/foldmic ~/.local/bin/foldmic
+ln -sf ~/foldmic/bin/foldmic ~/.local/bin/foldmic               # ~/.local/bin 이 PATH 에 없다면 셸 설정에 추가
 cp ~/foldmic/config.example ~/.config/foldmic/config            # FOLDMIC_PHONE 을 채운다
 
 # 폰과 처음 연결: 폰에서 무선 디버깅을 켠 뒤
@@ -107,6 +107,7 @@ tailscale serve --bg --https=8798 http://127.0.0.1:7798   # 앱 번들 CLI: /App
 | `FOLDMIC_PHONE` | 폰의 adb 주소 `<IP>:5555` (필수) |
 | `FOLDMIC_FALLBACK` | 끌 때 돌아갈 입력. 비우면 BlackHole 이 아닌 첫 입력 장치 |
 | `FOLDMIC_VDEV` | 가상 입력 장치 이름(기본 `BlackHole 2ch`) |
+| `FOLDMIC_CONFIG` | 설정 파일 경로(기본 `~/.config/foldmic/config`, 환경변수로만) |
 
 **에이전트** (환경변수): `FOLDMICD_PORT`(기본 7798) · `FOLDMICD_TOKEN`(비우면 인증 없음) · `FOLDMIC_BIN`(기본 `../bin/foldmic`)
 
