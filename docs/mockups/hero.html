@@ -6,8 +6,8 @@
 <script src="https://mockup-kit.invalid/kit.js"></script>
 <link rel="stylesheet" href="_app.css">
 <style>
-  .layout { position:absolute; top:40px; left:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; gap:32px; }
-  .mac-col { width:430px; display:flex; flex-direction:column; gap:18px; }
+  .layout { position:absolute; top:40px; left:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; gap:28px; }
+  .mac-col { width:400px; display:flex; flex-direction:column; gap:18px; }
   .drop { position:absolute; top:34px; right:120px; width:280px; z-index:25; }
   .snd .mac-body { gap:6px; padding:14px 16px; }
   .dev { display:flex; align-items:center; gap:10px; height:34px; padding:0 10px; border-radius:8px; font-size:13.5px; }
@@ -16,7 +16,8 @@
   .meter { display:flex; gap:3px; margin-top:4px; } .meter i { flex:1; height:8px; border-radius:2px; background: light-dark(#E2E0E8,#2E2A3B); }
   .meter i.f { background:#7C3AED; }
   .sub { font-size:12px; color:var(--mac-dim); }
-  .two .maccard { flex:1; min-width:0; }
+  .two-pane > .pane { gap:10px; padding:14px 16px; }
+  .two-pane .howopen { margin-top:0; }
 </style>
 </head><body>
 <div class="canvas app-foldmic desk-accent">
@@ -41,7 +42,7 @@
   <div class="layout">
     <!-- 펼침 -->
     <div>
-      <div class="fold-open" style="--zoom:.74">
+      <div class="fold-open" style="--zoom:.7">
         <div class="screen">
           <div class="status-bar" data-time="2:30"></div>
           <div class="app-bar">
@@ -50,14 +51,24 @@
             <span class="spacer"></span>
             <span class="theme-btn"><i data-icon="sun"></i><span>자동</span></span>
           </div>
-          <div class="content" style="gap:12px">
+          <div class="two-pane">
+            <div class="pane">
             <div class="now live">
               <div class="bigmic live"><div class="core"><i data-icon="mic"></i></div></div>
               <div class="grow"><div class="k">지금</div><div class="h">노트북에서 듣는 중</div><div class="s">폰 마이크가 열려 있어요. 다 쓰면 꺼 주세요.</div></div>
             </div>
+                        <div class="howopen">
+              <div class="top">어떻게 동작하나요?<i data-icon="chevron-down"></i></div>
+              <div class="step"><span class="n">1</span><span>켜면 맥이 무선 디버깅(adb)으로 이 폰의 마이크 소리를 받아 가상 장치 BlackHole 2ch 로 흘리고, 맥의 기본 입력을 그 장치로 바꿔요.</span></div>
+              <div class="step"><span class="n">2</span><span>그래서 Zoom·받아쓰기 같은 그 맥의 모든 앱이 폰 마이크로 들어요. 두 맥을 동시에 켜도 돼요.</span></div>
+              <div class="step"><span class="n">3</span><span>끄면 바꾸기 직전에 쓰던 입력으로 돌아가요. 폰 연결이 끊겨도 맥이 알아서 원래 마이크로 돌아가요.</span></div>
+              <div class="step"><span class="n">4</span><span>폰은 Tailscale 로 각 맥의 foldmicd 에 닿아요. 켜 두는 동안 폰 마이크는 계속 열려 있어요.</span></div>
+            </div>
+            <div class="build">빌드 09-28 14:02</div>
+            </div>
+            <div class="pane">
             <div class="lbl">연결할 맥</div>
-            <div class="row two" style="align-items:flex-start; gap:12px">
-              <div class="maccard on">
+            <div class="maccard on">
                 <div class="hd"><div class="tile"><i data-icon="laptop"></i></div>
                   <div class="grow"><div class="nm">노트북</div><div class="hs">my-laptop · 방금 확인</div></div>
                   <span class="pl on"><span class="d"></span>사용 중</span></div>
@@ -74,15 +85,8 @@
                 <div class="swrow"><div class="grow"><div class="a">폴드8 마이크로 듣기</div><div class="b">켜면 3~5초 안에 이 맥의 입력이 바뀌어요</div></div><span class="switch"></span></div>
                 <div class="info"><i data-icon="mic"></i><span class="l">맥 기본 입력</span><span class="v">내장 마이크</span></div>
               </div>
+            
             </div>
-            <div class="howopen">
-              <div class="top">어떻게 동작하나요?<i data-icon="chevron-down"></i></div>
-              <div class="step"><span class="n">1</span><span>켜면 맥이 무선 디버깅(adb)으로 이 폰의 마이크 소리를 받아 가상 장치 BlackHole 2ch 로 흘리고, 맥의 기본 입력을 그 장치로 바꿔요.</span></div>
-              <div class="step"><span class="n">2</span><span>그래서 Zoom·받아쓰기 같은 그 맥의 모든 앱이 폰 마이크로 들어요. 두 맥을 동시에 켜도 돼요.</span></div>
-              <div class="step"><span class="n">3</span><span>끄면 바꾸기 직전에 쓰던 입력으로 돌아가요. 폰 연결이 끊겨도 맥이 알아서 원래 마이크로 돌아가요.</span></div>
-              <div class="step"><span class="n">4</span><span>폰은 Tailscale 로 각 맥의 foldmicd 에 닿아요. 켜 두는 동안 폰 마이크는 계속 열려 있어요.</span></div>
-            </div>
-            <div class="build">빌드 09-28 14:02</div>
           </div>
           <div class="nav-handle"></div>
         </div>
@@ -92,7 +96,7 @@
 
     <!-- 커버 -->
     <div>
-      <div class="fold-cover" style="--zoom:.74">
+      <div class="fold-cover" style="--zoom:.7">
         <div class="screen">
           <div class="status-bar" data-time="2:30"></div>
           <div class="app-bar">
@@ -101,7 +105,7 @@
             <span class="spacer"></span>
             <span class="theme-btn"><i data-icon="sun"></i></span>
           </div>
-          <div class="content" style="gap:10px">
+          <div class="content" style="gap:14px">
             <div class="now live">
               <div class="bigmic live"><div class="core"><i data-icon="mic"></i></div></div>
               <div class="grow"><div class="k">지금</div><div class="h">노트북에서 듣는 중</div></div>
