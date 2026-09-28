@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 시작 창(첫 프레임 전) 배경을 앱 팔레트 bg 와 맞춰 흰/검 번쩍임을 없앤다. 화면 자체는 Compose 가 그린다. -->
+<resources>
+    <color name="fm_bg">#FAF9FC</color>
+    <style name="FoldMic" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/fm_bg</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

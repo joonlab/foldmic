@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 런처 아이콘(적응형) — 폴드 앱 묶음 공통 생성기로 만든 벡터 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <group android:pivotX="54" android:pivotY="54" android:scaleX="0.666" android:scaleY="0.666">
+    <path android:pathData="M54,22 a8,8 0 0 1 8,8 v14 a8,8 0 0 1 -16,0 v-14 a8,8 0 0 1 8,-8 z" android:fillColor="#FFFFFF" />
+    <path android:pathData="M40,40 v4 a14,14 0 0 0 28,0 v-4" android:strokeColor="#FFFFFF" android:strokeWidth="4.6" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    <path android:pathData="M54,58 v5 c0,5 14,3 14,8 v1" android:strokeColor="#FFFFFF" android:strokeWidth="4.2" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    <path android:pathData="M36,74 h36 l7,10 h-50 z" android:strokeColor="#FFFFFF" android:strokeWidth="4.6" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    </group>
+</vector>

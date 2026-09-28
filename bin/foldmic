@@ -1,0 +1,85 @@
+#!/bin/bash
+# foldmic — 이 맥의 마이크를 폴드8 마이크로 전환/복귀한다.
+#   foldmic on      폰 마이크 → BlackHole 2ch 브리지를 켜고, 시스템 기본 입력을 BlackHole 로 바꾼다
+#   foldmic off     기본 입력을 전환 직전 장치로 되돌리고 브리지를 끈다
+#   foldmic status  기본 입력 · 브리지 상태 (--json 가능)
+# 브리지가 죽으면(폰 끊김 등) 기본 입력을 자동으로 되돌린다 — 조용한 마이크로 남지 않게.
+set -u
+export PATH=/opt/homebrew/bin:/usr/local/bin:$HOME/Library/Android/sdk/platform-tools:$PATH
+# 설정: 환경변수 > ~/.config/foldmic/config (셸 형식, config.example 참고)
+CONF=${FOLDMIC_CONFIG:-$HOME/.config/foldmic/config}
+[ -f "$CONF" ] && . "$CONF"
+PHONE=${FOLDMIC_PHONE:-}          # 폰의 adb 주소, 예: <폰 Tailscale IP>:5555
+VDEV=${FOLDMIC_VDEV:-"BlackHole 2ch"}
+FALLBACK=${FOLDMIC_FALLBACK:-}    # 비우면 BlackHole 이 아닌 첫 입력 장치
+ST=$HOME/.local/state/foldmic; mkdir -p "$ST"
+PIDF=$ST/bridge.pid; PROG=$ST/progress; PREV=$ST/prev-input; LOG=$ST/bridge.log; FIFO=$ST/mic.fifo
+
+cur_input() { SwitchAudioSource -c -t input; }
+fallback_input() {
+  [ -n "$FALLBACK" ] && { echo "$FALLBACK"; return; }
+  SwitchAudioSource -a -t input | grep -vx "$VDEV" | head -1
+}
+bridge_alive() { [ -f "$PIDF" ] && kill -0 "$(cat "$PIDF")" 2>/dev/null; }
+# 소리가 실제로 흐르는가: BlackHole 로 내보낸 누적 시간(µs). scrcpy 로그는 tty 가 아니면 늦게 나와서 못 믿는다
+flowing_us() { sed -nE 's/^out_time_us=([0-9]+)$/\1/p' "$PROG" 2>/dev/null | tail -1; }
+restore_input() {
+  local p; p=$(cat "$PREV" 2>/dev/null); { [ -z "$p" ] || [ "$p" = "$VDEV" ]; } && p=$(fallback_input)
+  [ "$(cur_input)" = "$VDEV" ] && SwitchAudioSource -t input -s "$p" >/dev/null
+  rm -f "$PREV"
+}
+
+# 브리지 본체: scrcpy(폰 마이크, opus) → FIFO(mka) → ffmpeg → BlackHole. 끝나면 입력 복귀.
+run_bridge() {
+  trap 'kill $FF $SC 2>/dev/null; rm -f "$FIFO" "$PIDF"; restore_input; echo "$(date +%T) bridge stopped" >>"$LOG"' EXIT
+  trap 'exit 0' TERM INT
+  local idx
+  idx=$(ffmpeg -hide_banner -f lavfi -i anullsrc -t 0.1 -f audiotoolbox -list_devices true - 2>&1 \
+        | sed -nE "s/.*\] \[([0-9]+)\] +$VDEV,.*/\1/p")
+  [ -z "$idx" ] && { echo "$VDEV 장치 없음" >>"$LOG"; exit 1; }
+  rm -f "$FIFO"; mkfifo "$FIFO"
+  rm -f "$PROG"
+  ffmpeg -hide_banner -loglevel warning -progress "$PROG" -fflags nobuffer -flags low_delay -f matroska -i "$FIFO" \
+         -ac 2 -ar 48000 -f audiotoolbox -audio_device_index "$idx" - >>"$LOG" 2>&1 &
+  FF=$!
+  scrcpy -s "$PHONE" --no-video --no-control --no-window --audio-source=mic --audio-codec=opus \
+         --audio-bit-rate=64K --no-playback --record="$FIFO" --record-format=mka >>"$LOG" 2>&1 &
+  SC=$!
+  # bash 3.2 에는 wait -n 이 없다 → 둘 중 하나가 죽을 때까지 폴링
+  while kill -0 $FF 2>/dev/null && kill -0 $SC 2>/dev/null; do sleep 1; done
+}
+
+case "${1:-status}" in
+  on)
+    [ -n "$PHONE" ] || { echo "✗ 폰 주소가 없습니다 — FOLDMIC_PHONE=<폰 IP>:5555 를 환경변수나 $CONF 에 넣으세요"; exit 1; }
+    SwitchAudioSource -a -t input | grep -qx "$VDEV" || { echo "✗ $VDEV 가 없습니다 (brew install --cask blackhole-2ch 후 coreaudiod 재시작)"; exit 1; }
+    if ! bridge_alive; then
+      adb connect "$PHONE" >/dev/null 2>&1
+      adb -s "$PHONE" get-state >/dev/null 2>&1 || { echo "✗ 폰($PHONE)에 adb 연결 실패 — 폰 화면을 한 번 켜 보세요"; exit 1; }
+      # 지난 실행의 progress 가 남아 있으면 브리지가 뜨기 전에 «흐른다»로 오판한다 → 띄우기 전에 지운다
+      : >"$LOG"; rm -f "$PROG"
+      nohup "$0" _bridge >/dev/null 2>&1 &
+      echo $! >"$PIDF"
+      for _ in $(seq 1 30); do [ "$(flowing_us)" -gt 0 ] 2>/dev/null && break; bridge_alive || break; sleep 0.5; done
+      [ "$(flowing_us)" -gt 0 ] 2>/dev/null || { echo "✗ 브리지 시작 실패(소리가 흐르지 않음):"; tail -5 "$LOG"; "$0" off >/dev/null; exit 1; }
+    fi
+    c=$(cur_input); [ "$c" != "$VDEV" ] && echo "$c" >"$PREV"
+    SwitchAudioSource -t input -s "$VDEV" >/dev/null
+    echo "✓ 폴드8 마이크 사용 중 (기본 입력: $(cur_input), 복귀 대상: $(cat "$PREV" 2>/dev/null || fallback_input))";;
+  off)
+    # pid 를 한 번만 읽는다 — 브리지의 EXIT trap 이 그사이 pid 파일을 지울 수 있다
+    p=$(cat "$PIDF" 2>/dev/null)
+    [ -n "$p" ] && kill "$p" 2>/dev/null && for _ in $(seq 1 20); do kill -0 "$p" 2>/dev/null || break; sleep 0.2; done
+    restore_input; rm -f "$PIDF"
+    echo "✓ 원래 마이크로 복귀 (기본 입력: $(cur_input))";;
+  status)
+    b=off; bridge_alive && b=on
+    if [ "${2:-}" = --json ]; then
+      printf '{"host":"%s","input":"%s","bridge":"%s","fold":%s}\n' "$(hostname -s)" "$(cur_input)" "$b" \
+        "$([ "$b" = on ] && [ "$(cur_input)" = "$VDEV" ] && echo true || echo false)"
+    else
+      echo "기본 입력: $(cur_input) · 브리지: $b"
+    fi;;
+  _bridge) run_bridge;;
+  *) sed -n 2,6p "$0"; exit 2;;
+esac

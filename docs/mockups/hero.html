@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="shot" content="w=1600,h=1000,scale=2">
+<title>foldmic 구성</title>
+<link rel="stylesheet" href="https://mockup-kit.invalid/kit.css">
+<script src="https://mockup-kit.invalid/kit.js"></script>
+<link rel="stylesheet" href="_app.css">
+<style>
+  .layout { position:absolute; top:40px; left:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; gap:32px; }
+  .mac-col { width:430px; display:flex; flex-direction:column; gap:18px; }
+  .drop { position:absolute; top:34px; right:120px; width:280px; z-index:25; }
+  .snd .mac-body { gap:6px; padding:14px 16px; }
+  .dev { display:flex; align-items:center; gap:10px; height:34px; padding:0 10px; border-radius:8px; font-size:13.5px; }
+  .dev.on { background: color-mix(in srgb, var(--accent-l) 12%, transparent); font-weight:600; }
+  .dev .i { color: var(--mac-dim); font-size:16px; } .dev .r { margin-left:auto; color:var(--mac-dim); font-size:12px; }
+  .meter { display:flex; gap:3px; margin-top:4px; } .meter i { flex:1; height:8px; border-radius:2px; background: light-dark(#E2E0E8,#2E2A3B); }
+  .meter i.f { background:#7C3AED; }
+  .sub { font-size:12px; color:var(--mac-dim); }
+  .two .maccard { flex:1; min-width:0; }
+</style>
+</head><body>
+<div class="canvas app-foldmic desk-accent">
+  <div class="mac-menubar">
+    <span class="app-name">Zoom</span><span>회의</span><span>편집</span><span>보기</span><span>윈도우</span>
+    <div class="extras">
+      <span class="extra active"><i data-icon="mic"></i></span>
+      <span class="extra"><i data-icon="wifi"></i></span>
+      <span class="extra"><i data-icon="battery"></i></span>
+      <span class="extra"><i data-icon="search"></i></span>
+      <span class="clock">9월 28일 (일) 오후 2:30</span>
+    </div>
+  </div>
+  <div class="mac-menu drop">
+    <div class="m-head">입력</div>
+    <div class="m-item hl"><span class="check">✓</span>BlackHole 2ch</div>
+    <div class="m-item"><span class="check"></span>내장 마이크</div>
+    <div class="m-sep"></div>
+    <div class="m-item"><span class="check"></span>사운드 설정…</div>
+  </div>
+
+  <div class="layout">
+    <!-- 펼침 -->
+    <div>
+      <div class="fold-open" style="--zoom:.74">
+        <div class="screen">
+          <div class="status-bar" data-time="2:30"></div>
+          <div class="app-bar">
+            <img class="mark" data-app="foldmic" alt="">
+            <span class="title">폴드 마이크</span>
+            <span class="spacer"></span>
+            <span class="theme-btn"><i data-icon="sun"></i><span>자동</span></span>
+          </div>
+          <div class="content" style="gap:12px">
+            <div class="now live">
+              <div class="bigmic live"><div class="core"><i data-icon="mic"></i></div></div>
+              <div class="grow"><div class="k">지금</div><div class="h">노트북에서 듣는 중</div><div class="s">폰 마이크가 열려 있어요. 다 쓰면 꺼 주세요.</div></div>
+            </div>
+            <div class="lbl">연결할 맥</div>
+            <div class="row two" style="align-items:flex-start; gap:12px">
+              <div class="maccard on">
+                <div class="hd"><div class="tile"><i data-icon="laptop"></i></div>
+                  <div class="grow"><div class="nm">노트북</div><div class="hs">my-laptop · 방금 확인</div></div>
+                  <span class="pl on"><span class="d"></span>사용 중</span></div>
+                <div class="sep"></div>
+                <div class="swrow"><div class="grow"><div class="a">폴드8 마이크로 듣기</div><div class="b txt">이 맥의 모든 앱이 폰 마이크로 들어요</div></div><span class="switch on"></span></div>
+                <div class="info"><i data-icon="volume"></i><span class="l">맥 기본 입력</span><span class="v">폴드8 마이크 (BlackHole 2ch 경유)</span></div>
+                <div class="info"><i data-icon="mic"></i><span class="l">끄면 돌아갈 입력</span><span class="v">내장 마이크</span></div>
+              </div>
+              <div class="maccard">
+                <div class="hd"><div class="tile"><i data-icon="home"></i></div>
+                  <div class="grow"><div class="nm">홈맥</div><div class="hs">home-mac · 3초 전 확인</div></div>
+                  <span class="pl"><span class="d"></span>꺼짐</span></div>
+                <div class="sep"></div>
+                <div class="swrow"><div class="grow"><div class="a">폴드8 마이크로 듣기</div><div class="b">켜면 3~5초 안에 이 맥의 입력이 바뀌어요</div></div><span class="switch"></span></div>
+                <div class="info"><i data-icon="mic"></i><span class="l">맥 기본 입력</span><span class="v">내장 마이크</span></div>
+              </div>
+            </div>
+            <div class="howopen">
+              <div class="top">어떻게 동작하나요?<i data-icon="chevron-down"></i></div>
+              <div class="step"><span class="n">1</span><span>켜면 맥이 무선 디버깅(adb)으로 이 폰의 마이크 소리를 받아 가상 장치 BlackHole 2ch 로 흘리고, 맥의 기본 입력을 그 장치로 바꿔요.</span></div>
+              <div class="step"><span class="n">2</span><span>그래서 Zoom·받아쓰기 같은 그 맥의 모든 앱이 폰 마이크로 들어요. 두 맥을 동시에 켜도 돼요.</span></div>
+              <div class="step"><span class="n">3</span><span>끄면 바꾸기 직전에 쓰던 입력으로 돌아가요. 폰 연결이 끊겨도 맥이 알아서 원래 마이크로 돌아가요.</span></div>
+              <div class="step"><span class="n">4</span><span>폰은 Tailscale 로 각 맥의 foldmicd 에 닿아요. 켜 두는 동안 폰 마이크는 계속 열려 있어요.</span></div>
+            </div>
+            <div class="build">빌드 09-28 14:02</div>
+          </div>
+          <div class="nav-handle"></div>
+        </div>
+      </div>
+      <div class="device-label">펼친 화면 · 맥 두 대를 나란히</div>
+    </div>
+
+    <!-- 커버 -->
+    <div>
+      <div class="fold-cover" style="--zoom:.74">
+        <div class="screen">
+          <div class="status-bar" data-time="2:30"></div>
+          <div class="app-bar">
+            <img class="mark" data-app="foldmic" alt="">
+            <span class="title">폴드 마이크</span>
+            <span class="spacer"></span>
+            <span class="theme-btn"><i data-icon="sun"></i></span>
+          </div>
+          <div class="content" style="gap:10px">
+            <div class="now live">
+              <div class="bigmic live"><div class="core"><i data-icon="mic"></i></div></div>
+              <div class="grow"><div class="k">지금</div><div class="h">노트북에서 듣는 중</div></div>
+            </div>
+            <div class="lbl">연결할 맥</div>
+            <div class="maccard on">
+              <div class="hd"><div class="tile"><i data-icon="laptop"></i></div>
+                <div class="grow"><div class="nm">노트북</div><div class="hs">my-laptop</div></div>
+                <span class="pl on"><span class="d"></span>사용 중</span></div>
+              <div class="sep"></div>
+              <div class="swrow"><div class="grow"><div class="a">폴드8 마이크로 듣기</div></div><span class="switch on"></span></div>
+            </div>
+            <div class="maccard">
+              <div class="hd"><div class="tile"><i data-icon="home"></i></div>
+                <div class="grow"><div class="nm">홈맥</div><div class="hs">home-mac</div></div>
+                <span class="pl"><span class="d"></span>꺼짐</span></div>
+              <div class="sep"></div>
+              <div class="swrow"><div class="grow"><div class="a">폴드8 마이크로 듣기</div></div><span class="switch"></span></div>
+            </div>
+          </div>
+          <div class="nav-handle"></div>
+        </div>
+      </div>
+      <div class="device-label">커버 화면</div>
+    </div>
+
+    <!-- 맥 -->
+    <div class="mac-col">
+      <div class="mac-window snd">
+        <div class="mac-titlebar"><span class="traffic"><i></i><i></i><i></i></span><span class="mac-title">사운드 — 입력</span></div>
+        <div class="mac-body">
+          <div class="dev on"><i data-icon="volume"></i>BlackHole 2ch<span class="r">가상 장치 · 폰 마이크</span></div>
+          <div class="dev"><i data-icon="mic"></i>내장 마이크<span class="r">내장</span></div>
+          <div style="margin-top:8px" class="sub">입력 레벨</div>
+          <div class="meter"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="traffic"><i></i><i></i><i></i></span><span class="t-title">foldmic — zsh</span></div>
+        <div class="terminal-body"><span class="t-prompt">❯</span> <span class="t-b">foldmic status</span>
+기본 입력: BlackHole 2ch · 브리지: <span class="t-ok">on</span>
+
+<span class="t-prompt">❯</span> <span class="t-b">foldmic status --json</span>
+<span class="t-dim">{"host":"my-laptop","input":"BlackHole 2ch",</span>
+<span class="t-dim"> "bridge":"on","fold":true}</span>
+
+<span class="t-prompt">❯</span> <span class="t-cursor"></span></div>
+      </div>
+      <div class="device-label">맥 · 시스템 기본 입력이 폰 마이크로</div>
+    </div>
+  </div>
+</div>
+</body></html>

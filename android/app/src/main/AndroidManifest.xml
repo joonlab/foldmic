@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- 맥에 닿지 않을 때 «Tailscale 열기» 버튼을 보이려면 설치 여부를 알아야 한다(Android 11+ 패키지 가시성) -->
+    <queries>
+        <package android:name="com.tailscale.ipn" />
+    </queries>
+
+    <application
+        android:label="폴드 마이크"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/FoldMic"
+        android:supportsRtl="true">
+
+        <!-- 폴드: 접힘·펼침 크기 변화를 스스로 감당한다 -->
+        <meta-data android:name="android.supports_size_changes" android:value="true" />
+
+        <!-- configChanges — 접고 펴거나 돌려도 액티비티를 다시 만들지 않는다 → 전환 중 상태가 남는다 -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:resizeableActivity="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|density|uiMode">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

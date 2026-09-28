@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="shot" content="w=1600,h=1000,scale=2">
+<title>foldmic CLI</title>
+<link rel="stylesheet" href="https://mockup-kit.invalid/kit.css">
+<script src="https://mockup-kit.invalid/kit.js"></script>
+<style>
+  .wrap { position:absolute; inset:0; padding:64px 72px; display:flex; flex-direction:column; justify-content:center; gap:32px; }
+  .cols { display:grid; grid-template-columns: 1.15fr 1fr; gap:28px; align-items:start; }
+  .terminal-body { font-size:15px; line-height:24px; }
+  .side { display:flex; flex-direction:column; gap:20px; }
+  .lv { background:var(--raised); border:1px solid var(--border); border-radius:14px; padding:20px 22px; box-shadow: var(--shadow-float); color:var(--mac-text); }
+  .lv h4 { margin:0 0 14px; font-size:16px; }
+  .bar { display:grid; grid-template-columns: 170px 1fr 70px; gap:12px; align-items:center; font-size:13.5px; margin-top:10px; }
+  .bar .tr { height:12px; border-radius:6px; background: var(--panel2); overflow:hidden; }
+  .bar .tr i { display:block; height:100%; border-radius:6px; }
+  .bar .v { font-variant-numeric: tabular-nums; text-align:right; font-weight:600; }
+  .note { font-size:13px; color:var(--dim); margin-top:14px; line-height:19px; }
+</style>
+</head><body>
+<div class="canvas app-foldmic">
+ <div class="wrap">
+  <div><div class="canvas-title">맥에서는 명령 하나</div>
+   <div class="canvas-sub">폰 앱이 없어도 <span class="mono">foldmic on</span> 으로 켜고 <span class="mono">off</span> 로 원래 마이크에 돌아옵니다</div></div>
+  <div class="cols">
+   <div class="terminal">
+    <div class="terminal-bar"><span class="traffic"><i></i><i></i><i></i></span><span class="t-title">foldmic — zsh</span></div>
+    <div class="terminal-body"><span class="t-prompt">❯</span> <span class="t-b">foldmic status</span>
+기본 입력: 내장 마이크 · 브리지: off
+
+<span class="t-prompt">❯</span> <span class="t-b">foldmic on</span>
+<span class="t-ok">✓</span> 폴드8 마이크 사용 중 (기본 입력: BlackHole 2ch,
+  복귀 대상: 내장 마이크)          <span class="t-dim"># 3.1초</span>
+
+<span class="t-prompt">❯</span> <span class="t-b">foldmic status --json</span>
+<span class="t-dim">{"host":"my-laptop","input":"BlackHole 2ch","bridge":"on","fold":true}</span>
+
+<span class="t-prompt">❯</span> <span class="t-b">foldmic off</span>
+<span class="t-ok">✓</span> 원래 마이크로 복귀 (기본 입력: 내장 마이크)
+
+<span class="t-prompt">❯</span> <span class="t-b">foldmic on</span>   <span class="t-dim"># 폰 화면이 꺼져 있으면</span>
+<span class="t-err">✗</span> 폰(&lt;phone-ip&gt;:5555)에 adb 연결 실패 — 폰 화면을 한 번 켜 보세요
+
+<span class="t-prompt">❯</span> <span class="t-cursor"></span></div>
+   </div>
+   <div class="side">
+    <div class="terminal">
+     <div class="terminal-bar"><span class="traffic"><i></i><i></i><i></i></span><span class="t-title">에이전트 확인</span></div>
+     <div class="terminal-body"><span class="t-prompt">❯</span> <span class="t-b">pm2 start agent/ecosystem.config.js</span>
+<span class="t-dim">[PM2]</span> foldmicd  <span class="t-ok">online</span>  <span class="t-dim">127.0.0.1:7798 에만 바인딩</span>
+
+<span class="t-prompt">❯</span> <span class="t-b">curl -s -H "Authorization: Bearer $TOKEN" \
+    https://&lt;mac&gt;:8798/status</span>
+<span class="t-dim">{"host":"my-laptop","input":"내장 마이크",</span>
+<span class="t-dim"> "bridge":"off","fold":false}</span></div>
+    </div>
+    <div class="lv">
+     <h4>소리가 정말 들어오나 — 입력 음량으로 확인</h4>
+     <div class="bar"><span>브리지 없음 (무음)</span><span class="tr"><i style="width:8%;background:var(--dim)"></i></span><span class="v">−70 dB</span></div>
+     <div class="bar"><span>폴드8 마이크로 전환 후</span><span class="tr"><i style="width:58%;background:var(--accent)"></i></span><span class="v">−37 dB</span></div>
+     <div class="note">BlackHole 은 소리가 안 와도 에러를 내지 않습니다. 그래서 켜기는 ffmpeg 가 실제로 소리를 내보낸 시간을 확인한 뒤에야 «성공»을 말합니다.</div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+</body></html>

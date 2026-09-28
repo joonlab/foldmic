@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="shot" content="w=1600,h=900,scale=2">
+<title>foldmic 썸네일</title>
+<link rel="stylesheet" href="https://mockup-kit.invalid/kit.css">
+<script src="https://mockup-kit.invalid/kit.js"></script>
+<link rel="stylesheet" href="_app.css">
+<style>
+  .lefty { position:absolute; left:96px; top:0; bottom:0; width:640px; display:flex; flex-direction:column; justify-content:center; gap:18px; color:var(--mac-text); }
+  .lefty .app-icon { width:96px; height:96px; border-radius:22px; }
+  .lefty h1 { margin:0; font-size:72px; line-height:80px; letter-spacing:-1.5px; }
+  .lefty .one { font-size:30px; line-height:40px; font-weight:700; }
+  .lefty .sub { font-size:19px; line-height:30px; color:var(--mac-dim); }
+  .chips2 { display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
+  .r { position:absolute; right:110px; top:0; bottom:0; display:flex; align-items:center; }
+</style>
+</head><body>
+<div class="canvas thumb app-foldmic desk-accent">
+  <div class="lefty">
+    <img class="app-icon" data-app="foldmic" alt="">
+    <h1>foldmic</h1>
+    <div class="one">폰 마이크를 맥의 시스템 입력으로</div>
+    <div class="sub">수백 km 떨어져 있어도 Tailscale 로 닿으면 됩니다.<br>Zoom · 받아쓰기 · 음성 입력이 전부 폰 마이크로 듣습니다.</div>
+    <div class="chips2"><span class="tag accent">Android 앱</span><span class="tag accent">맥 CLI</span><span class="tag accent">HTTP 에이전트</span><span class="tag accent">BlackHole</span></div>
+  </div>
+  <div class="r">
+    <div class="fold-cover" style="--zoom:.8">
+      <div class="screen">
+        <div class="status-bar" data-time="2:30"></div>
+        <div class="app-bar"><img class="mark" data-app="foldmic" alt=""><span class="title">폴드 마이크</span><span class="spacer"></span><span class="theme-btn"><i data-icon="sun"></i></span></div>
+        <div class="content" style="gap:10px">
+          <div class="now live"><div class="bigmic live"><div class="core"><i data-icon="mic"></i></div></div>
+            <div class="grow"><div class="k">지금</div><div class="h">홈맥에서 듣는 중</div><div class="s">폰 마이크가 열려 있어요.</div></div></div>
+          <div class="lbl">연결할 맥</div>
+          <div class="maccard"><div class="hd"><div class="tile"><i data-icon="laptop"></i></div><div class="grow"><div class="nm">노트북</div><div class="hs">my-laptop</div></div><span class="pl"><span class="d"></span>꺼짐</span></div><div class="sep"></div>
+            <div class="swrow"><div class="grow"><div class="a">폴드8 마이크로 듣기</div></div><span class="switch"></span></div></div>
+          <div class="maccard on"><div class="hd"><div class="tile"><i data-icon="home"></i></div><div class="grow"><div class="nm">홈맥</div><div class="hs">home-mac</div></div><span class="pl on"><span class="d"></span>사용 중</span></div><div class="sep"></div>
+            <div class="swrow"><div class="grow"><div class="a">폴드8 마이크로 듣기</div><div class="b txt">이 맥의 모든 앱이 폰 마이크로 들어요</div></div><span class="switch on"></span></div>
+            <div class="info"><i data-icon="volume"></i><span class="l">맥 기본 입력</span><span class="v">BlackHole 2ch</span></div>
+            <div class="info"><i data-icon="mic"></i><span class="l">끄면 돌아갈 입력</span><span class="v">내장 마이크</span></div></div>
+          <div class="howopen"><div class="top">어떻게 동작하나요?<i data-icon="chevron-down"></i></div>
+            <div class="step"><span class="n">1</span><span>맥이 adb 로 폰 마이크 소리를 받아 BlackHole 2ch 로 흘려요.</span></div>
+            <div class="step"><span class="n">2</span><span>끄면 바꾸기 직전 입력으로 돌아가요.</span></div></div>
+        </div>
+        <div class="nav-handle"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>
